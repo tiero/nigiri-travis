@@ -10,6 +10,7 @@ env:
 before_install:
   - docker -v
   - docker-compose -v
+  - chmod -R 777 . 
 
 install:
   - docker-compose build
