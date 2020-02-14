@@ -2,6 +2,7 @@ version: '3'
 services:
   # RPC daemons
   bitcoin:
+    container_name: nigiri_bitcoin
     image: vulpemventures/bitcoin:latest
     networks:
       local:
@@ -12,6 +13,7 @@ services:
       - ./config/:/config
     restart: unless-stopped
   liquid:
+    container_name: nigiri_liquid
     image: vulpemventures/liquid:latest
     networks:
       local:

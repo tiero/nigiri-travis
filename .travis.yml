@@ -18,6 +18,8 @@ before_script:
 
 script:
   - docker ps -a
+  - docker logs nigiri_bitcoin
+  - docker logs nigiri_liquid
 
 after_script:
   - docker-compose down
