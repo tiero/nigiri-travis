@@ -2,6 +2,7 @@ version: '3'
 services:
   # RPC daemons
   bitcoin:
+    container_name: nigiri_bitcoin
     image: vulpemventures/bitcoin:latest
     networks:
       local:
@@ -9,9 +10,10 @@ services:
     ports:
       - ${BITCOIN_NODE_PORT}:19001
     volumes:
-      - ./volumes/liquidregtest/config/:/config
+      - ./config/:/config
     restart: unless-stopped
   liquid:
+    container_name: nigiri_liquid
     image: vulpemventures/liquid:latest
     networks:
       local:
@@ -20,7 +22,7 @@ services:
       - ${LIQUID_NODE_PORT}:18884
       - 18886:18886
     volumes:
-      - ./volumes/liquidregtest/liquid-config/:/config
+      - ./liquid-config/:/config
     restart: unless-stopped
   # Block explorer REST servers
   electrs:
@@ -54,7 +56,7 @@ services:
       - ${BITCOIN_ELECTRS_RPC_PORT}:60401
       - ${BITCOIN_ELECTRS_PORT}:3002
     volumes:
-      - ./volumes/liquidregtest/config/:/config
+      - ./config/:/config
     restart: unless-stopped
   electrs-liquid:
     image: vulpemventures/electrs-liquid:latest
@@ -87,7 +89,7 @@ services:
       - ${LIQUID_ELECTRS_RPC_PORT}:60401
       - ${LIQUID_ELECTRS_PORT}:3002
     volumes:
-      - ./volumes/liquidregtest/liquid-config/:/config
+      - ./liquid-config/:/config
     restart: unless-stopped
   # Chopsticks
   chopsticks:
