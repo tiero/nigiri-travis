@@ -20,8 +20,8 @@ before_script:
 
 script:
   - docker ps -a
-  - docker logs nigiri_bitcoin
-  - docker logs nigiri_liquid
+  - curl http://localhost:3000/blocks
+
 
 after_script:
   - docker-compose down
