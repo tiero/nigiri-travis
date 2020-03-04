@@ -11,6 +11,8 @@ before_install:
   - docker -v
   - docker-compose -v
   - chmod -R 777 . 
+  - TAG=$(curl -sL -H 'Accept: application/json' $LATEST_RELEASE_URL | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+  - curl -sL https://raw.githubusercontent.com/vulpemventures/nigiri/$TAG/resources/docker-compose-regtest-liquid.yml
 
 install:
   - docker-compose build
