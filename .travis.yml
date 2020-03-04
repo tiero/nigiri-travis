@@ -1,14 +1,16 @@
 services:
   - docker
  
-install:
+before_install:
   - curl https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/index.sh | bash
 
-before_script:
+install:
   - docker-compose up -d
 
 script:
-  - curl http://localhost:3001/blocks
+  - docker ps -a
+  - curl http://localhost:3000/blocks/tip/height
+  - curl http://localhost:3001/blocks/tip/height
 
 
 after_script:
