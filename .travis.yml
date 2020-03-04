@@ -8,15 +8,16 @@ env:
   - BITCOIN_ELECTRS_PORT=3002 BITCOIN_ELECTRS_RPC_PORT=51401 BITCOIN_CHOPSTICKS_PORT=3000 BITCOIN_NODE_PORT=18433 LIQUID_CHOPSTICKS_PORT=3001 LIQUID_NODE_PORT=7041 LIQUID_ELECTRS_PORT=3012 LIQUID_ELECTRS_RPC_PORT=60401
 
 before_install:
+  
   - docker -v
   - docker-compose -v
   - chmod -R 777 . 
 
 install:
-  - docker-compose build
+  - curl https://getnigiri.vulpem.com | bash
 
 before_script:
-  - docker-compose up -d
+  - nigiri start --liquid
 
 script:
   - docker ps -a
@@ -24,4 +25,4 @@ script:
 
 
 after_script:
-  - docker-compose down
+  - nigiri stop --delete
