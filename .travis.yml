@@ -12,8 +12,8 @@ before_install:
   - docker-compose -v
   - mkdir -p config liquid-config
   - chmod -R 777 . 
-  - curl -o /config/bitcoin.conf -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/bitcoin.conf
-  - curl -o /liquid-config/bitcoin.conf -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/elements.conf
+  - curl -o ./config/bitcoin.conf -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/bitcoin.conf
+  - curl -o ./liquid-config/bitcoin.conf -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/elements.conf
   - curl -o docker-compose.yml -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/docker-compose.yml
 
 install:
