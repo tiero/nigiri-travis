@@ -20,7 +20,9 @@ before_script:
 
 script:
   - docker ps -a
-  - curl http://localhost:3000/blocks
+  - docker logs electrs
+  - docker logs electrs-liquid
+  #- curl http://localhost:3000/blocks
 
 
 after_script:
