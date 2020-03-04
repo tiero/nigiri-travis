@@ -11,7 +11,7 @@ before_install:
   - docker -v
   - docker-compose -v
   - chmod -R 777 . 
-  - curl -o docker-compose.yml -sL https://raw.githubusercontent.com/vulpemventures/nigiri/v0.0.7/resources/docker-compose-regtest-liquid.yml
+  - curl -o docker-compose.yml -sL https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/docker-compose.yml
 
 install:
   - docker-compose build
