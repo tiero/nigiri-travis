@@ -4,9 +4,6 @@ services:
   bitcoin:
     container_name: nigiri_bitcoin
     image: vulpemventures/bitcoin:latest
-    networks:
-      local:
-        ipv4_address: 10.10.0.10
     ports:
       - ${BITCOIN_NODE_PORT}:19001
     volumes:
@@ -15,9 +12,6 @@ services:
   liquid:
     container_name: nigiri_liquid
     image: vulpemventures/liquid:latest
-    networks:
-      local:
-        ipv4_address: 10.10.0.11
     ports:
       - ${LIQUID_NODE_PORT}:18884
       - 18886:18886
@@ -36,7 +30,7 @@ services:
       - --daemon-dir
       - /config
       - --daemon-rpc-addr
-      - 10.10.0.10:19001
+      - bitcoin:19001
       - --cookie
       - admin1:123
       - --http-addr
@@ -45,11 +39,6 @@ services:
       - 0.0.0.0:60401
       - --cors
       - "*"
-    networks:
-      local:
-        ipv4_address: 10.10.0.12
-    links:
-      - bitcoin
     depends_on:
       - bitcoin
     ports:
@@ -69,7 +58,7 @@ services:
       - --daemon-dir
       - /config
       - --daemon-rpc-addr
-      - 10.10.0.11:18884
+      - liquid:18884
       - --cookie
       - admin1:123
       - --http-addr
@@ -78,11 +67,6 @@ services:
       - 0.0.0.0:60401
       - --cors
       - "*"
-    networks:
-      local:
-        ipv4_address: 10.10.0.13
-    links:
-      - liquid
     depends_on:
       - liquid
     ports:
@@ -101,21 +85,16 @@ services:
       - --use-mining
       - --use-logger
       - --rpc-addr
-      - 10.10.0.10:19001
+      - bitcoin:19001
       - --electrs-addr
-      - 10.10.0.12:3002
+      - electrs:3002
       - --addr
       - 0.0.0.0:3000
-    links:
-      - electrs
-      - bitcoin
     depends_on:
       - electrs
+      - bitcoin
     ports:
       - ${BITCOIN_CHOPSTICKS_PORT}:3000
-    networks:
-      local:
-        ipv4_address: 10.10.0.16
     restart: unless-stopped
   chopsticks-liquid:
     image: vulpemventures/nigiri-chopsticks:latest
@@ -126,28 +105,19 @@ services:
       - --use-mining
       - --use-logger
       - --rpc-addr
-      - 10.10.0.11:18884
+      - liquid:18884
       - --electrs-addr
-      - 10.10.0.13:3002
+      - electrs-liquid:3002
       - --addr
       - 0.0.0.0:3000
       - --chain
       - liquid
-    links:
-      - electrs-liquid
-      - liquid
     depends_on:
       - electrs-liquid
+      - liquid
     ports:
       - ${LIQUID_CHOPSTICKS_PORT}:3000
     networks:
       local:
         ipv4_address: 10.10.0.17
     restart: unless-stopped
-
-networks:
-  local:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.10.0.0/24
