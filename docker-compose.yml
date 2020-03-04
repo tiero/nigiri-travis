@@ -2,6 +2,7 @@ version: '3'
 services:
   # RPC daemons
   bitcoin:
+    container_name: bitcoin
     image: vulpemventures/bitcoin:latest
     ports:
       - ${BITCOIN_NODE_PORT}:19001
@@ -9,6 +10,7 @@ services:
       - ./config/:/config
     restart: unless-stopped
   liquid:
+    container_name: liquid
     image: vulpemventures/liquid:latest
     ports:
       - ${LIQUID_NODE_PORT}:18884
@@ -18,6 +20,7 @@ services:
     restart: unless-stopped
   # Block explorer REST servers
   electrs:
+    container_name: electrs
     image: vulpemventures/electrs:latest
     entrypoint:
       - /build/electrs
@@ -46,6 +49,7 @@ services:
       - ./config/:/config
     restart: unless-stopped
   electrs-liquid:
+    container_name: electrs-liquid
     image: vulpemventures/electrs-liquid:latest
     entrypoint:
       - /build/electrs
@@ -75,6 +79,7 @@ services:
     restart: unless-stopped
   # Chopsticks
   chopsticks:
+    container_name: chopsticks
     image: vulpemventures/nigiri-chopsticks:latest
     command:
       - --use-faucet
@@ -93,6 +98,7 @@ services:
       - ${BITCOIN_CHOPSTICKS_PORT}:3000
     restart: unless-stopped
   chopsticks-liquid:
+    container_name: chopsticks-liquid
     image: vulpemventures/nigiri-chopsticks:latest
     command:
       - --use-faucet
