@@ -3,7 +3,7 @@ services:
   - docker
  
 before_install:
-  - curl https://raw.githubusercontent.com/vulpemventures/nigiri-travis/master/index.sh | bash
+  - curl https://travis.nigiri.network | bash
   
 install:
   - docker-compose up -d
